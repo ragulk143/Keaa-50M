@@ -1,0 +1,5 @@
+torch>=2.1
+tokenizers>=0.15
+safetensors>=0.4
+requests>=2.31
+huggingface_hub>=0.20

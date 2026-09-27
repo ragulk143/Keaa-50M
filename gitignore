@@ -1,0 +1,8 @@
+raw_data/
+tokenizer_out/
+checkpoints/
+release/*.safetensors
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env

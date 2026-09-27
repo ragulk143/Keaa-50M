@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this model or code, please cite it as below."
+title: "Keaa-50M: A 50M-Parameter Mamba State-Space Model for Infrastructure Automation Code Autocomplete"
+authors:
+  - family-names: "YOUR_LAST_NAME"
+    given-names: "YOUR_FIRST_NAME"
+    affiliation: "Saranathan College of Engineering"
+date-released: 2026-09-27
+url: "https://github.com/your-username/keaa-50m"
+repository-code: "https://github.com/your-username/keaa-50m"
+license: Apache-2.0
+keywords:
+  - mamba
+  - state-space-models
+  - code-generation
+  - infrastructure-as-code
