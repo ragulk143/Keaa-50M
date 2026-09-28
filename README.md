@@ -1,4 +1,5 @@
 # Keaa-50M
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/5b2e4536-3687-4f8f-abca-04b2f9fe2ef0" />
 
 A 50M-parameter Mamba (S6) state-space model, trained from scratch, for
 local zero-cost autocomplete on infrastructure automation code: GitHub
