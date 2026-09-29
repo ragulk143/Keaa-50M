@@ -249,6 +249,11 @@ def main():
             scaler.load_state_dict(ckpt["scaler"])
         start_step = ckpt["step"]
 
+    if _env("KEAA_COMPILE", 0):
+        log("Compiling model with torch.compile (first step will be slow -- that's the compile "
+            "warmup, not the real per-step time)")
+        raw_model = torch.compile(raw_model)          # compile BEFORE DDP wrap, per torch docs
+
     model = DDP(raw_model, device_ids=[local_rank] if use_amp else None) if ddp else raw_model
 
     sampler = DistributedSampler(train_ds, num_replicas=world, rank=rank, shuffle=True,
