@@ -145,11 +145,22 @@ class KeaaMamba(nn.Module):
         self.lm_head = nn.Linear(cfg.d_model, cfg.vocab_size, bias=False)
         self.lm_head.weight = self.embedding.weight  # weight tying saves params
         nn.init.normal_(self.embedding.weight, mean=0.0, std=0.02)  # keeps init logits well-scaled
+        self.use_checkpoint = False  # set True via gradient_checkpointing_enable(); no effect on outputs
+
+    def gradient_checkpointing_enable(self):
+        """Recompute each layer's activations during backward instead of keeping all of
+        them in memory at once. Same math, same gradients -- trades some extra compute
+        for memory that no longer scales with n_layers, so you can raise batch size."""
+        self.use_checkpoint = True
 
     def forward(self, input_ids, labels=None):
         x = self.embedding(input_ids)
         for layer in self.layers:
-            x = layer(x)
+            if self.use_checkpoint and self.training:
+                import torch.utils.checkpoint as cp
+                x = cp.checkpoint(layer, x, use_reentrant=False)
+            else:
+                x = layer(x)
         x = self.norm_f(x)
         logits = self.lm_head(x)
 
