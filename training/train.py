@@ -249,6 +249,11 @@ def main():
             scaler.load_state_dict(ckpt["scaler"])
         start_step = ckpt["step"]
 
+    if _env("KEAA_GRAD_CHECKPOINT", 0):
+        raw_model.gradient_checkpointing_enable()
+        log("Gradient checkpointing enabled (recomputes each layer in backward; "
+            "same math, lets you raise batch size without memory scaling by n_layers)")
+
     if _env("KEAA_COMPILE", 0):
         log("Compiling model with torch.compile (first step will be slow -- that's the compile "
             "warmup, not the real per-step time)")
